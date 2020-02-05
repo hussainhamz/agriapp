@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.hamza.agriapp.login.LoginActivity;
 
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         if (!isUserConnected) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(), "Vous êtes bien connecté", Toast.LENGTH_LONG).show();
         }
+
     }
 }
