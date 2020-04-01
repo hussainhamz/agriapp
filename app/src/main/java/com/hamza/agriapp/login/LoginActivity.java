@@ -26,15 +26,16 @@ public class LoginActivity extends AppCompatActivity {
         String email =  ((EditText)findViewById(R.id.userEmail)).getText().toString();
         String pass = ((EditText)findViewById(R.id.userPassword)).getText().toString();
 
-//        if (this.email.equalsIgnoreCase(email) && this.pass.equalsIgnoreCase(pass)) {
+        if (this.email.equalsIgnoreCase(email) && this.pass.equalsIgnoreCase(pass)) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("IS_USER_CONNECTED", true);
+            Toast.makeText(getApplicationContext(), email + " : " + pass + " est correct", Toast.LENGTH_LONG).show();
             startActivity(intent);
-//        } else {
-//            String messageEchecConnexion = "Vérifiez votre email / mot de passe.";
-//            Toast.makeText(getApplicationContext(), email + " : " + pass, Toast.LENGTH_LONG).show();
-//            Toast.makeText(getApplicationContext(), messageEchecConnexion, Toast.LENGTH_LONG).show();
-//        }
+        } else {
+            String messageEchecConnexion = "Vérifiez votre email / mot de passe.";
+            Toast.makeText(getApplicationContext(), email + " : " + pass, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), messageEchecConnexion, Toast.LENGTH_LONG).show();
+        }
 
     }
 }
