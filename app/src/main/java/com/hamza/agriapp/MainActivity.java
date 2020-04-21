@@ -11,11 +11,23 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.hamza.agriapp.data.Balise;
 import com.hamza.agriapp.login.LoginActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> baliseAdapter;
+
+    private String urlApi = "http://127.0.0.1:80/agriapp/index.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         // Appel à la fonction pour vérifier la connexion
         verifierUtilisateur();
         generateMesBalises();
+        List<Balise> balises = recupereMesBalisesViaAPI();
+        afficheMessage("le nombre de balises: " + balises.size());
+        for (Balise balise : balises) {
+            afficheMessage(balise.getNom());
+        }
 
         ListView baliseListView = (ListView) findViewById(R.id.listBalise);
         if (baliseListView != null && baliseAdapter != null) {
@@ -71,6 +88,36 @@ public class MainActivity extends AppCompatActivity {
 
         baliseAdapter = new ArrayAdapter<String>(this, R.layout.une_balise,
                 R.id.textBalise, mesBalises);
+    }
+
+    private List<Balise> recupereMesBalisesViaAPI() {
+        final List<Balise> mesBalises = new ArrayList<>();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlApi,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.w("AGRI", "ggggggggggggggggggggggggggggggg");
+                        try {
+                            Log.w("AGRII", response.toString(2));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = response.getJSONObject(i);
+                                Balise balise = new Balise();
+                                balise.setNom(jsonObject.getString("nom"));
+                                mesBalises.add(balise);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                null
+        );
+        return mesBalises;
     }
 
     public void afficheMessage(String message) {

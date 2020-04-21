@@ -1,13 +1,18 @@
 package com.hamza.agriapp.data;
 
 public class Balise {
+    private int id;
     private String nom;
-    private float alttitude;
+    private float altitude;
     private float longitude;
+
+    public Balise() {
+
+    }
 
     public Balise(String nom) {
         this.nom = nom;
-        this.alttitude = 0.0f;
+        this.altitude = 0.0f;
         this.longitude = 0.0f;
     }
 
@@ -19,12 +24,12 @@ public class Balise {
         this.nom = nom;
     }
 
-    public float getAlttitude() {
-        return alttitude;
+    public float getAltitude() {
+        return altitude;
     }
 
-    public void setAlttitude(float alttitude) {
-        this.alttitude = alttitude;
+    public void setAltitude(float altitude) {
+        this.altitude = altitude;
     }
 
     public float getLongitude() {
